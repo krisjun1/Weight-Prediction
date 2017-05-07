@@ -1,0 +1,51 @@
+---
+title: "Weight Prediction"
+author: "Krishna B. Thapa Magar"
+date: "5/7/2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Background
+
+- I teach in Eastern New Mexico University. I asked my "Introductory Statistics" students to perform statistical finding on height and weight of males and females of our campus. They collected some sample to perform their work.
+- I thought of using their dataset (with their permission) to make a linear prediction model on weight given their height.
+- I decided to build two linear models: the first model using 43 female dataset to predict the weight of a female, and the second model using all 120 dataset to predict the weight of a person. 
+
+
+
+## The dataset and two models
+
+- The sample has height and weight of 77 female and 43 male.
+
+```{r, comment=""}
+data_fm<-read.csv("enmu_fm.csv")
+data_f<-read.csv("enmu_f.csv")
+summary(data_fm)
+modelF<-lm(Weight~Height, data = data_f)
+modelFm<-lm(Weight~Height, data = data_fm)
+paste0("weight_F=", round(coef(modelF)[1],2) , "+" , round(coef(modelFm)[2],2) , "*" , "height_F")
+paste0("weight=", round(coef(modelFm)[1],2) , "+" , round(coef(modelFm)[2],2) , "*" , "height")
+```
+
+## Scatterplot and linear model for Female weight
+
+```{r}
+plot(data_f$Height, data_f$Weight, xlab = "Height of Female (in inches)", 
+         ylab = "Weight of Female (in lbs)", bty="n", pch=16,
+         xlim = c(56,77), ylim = c(95, 285))
+      abline(modelF, col="red", lwd=2)
+```
+
+## Scatterplot and linear model for a person's weight
+
+```{r}
+plot(data_fm$Height, data_fm$Weight, xlab = "Height of a person (in inches)", 
+         ylab = "Weight of a person (in lbs)", bty="n", pch=16,
+         xlim = c(56,77), ylim = c(95, 285))
+      abline(modelFm, col="blue", lwd=2)
+```
+
